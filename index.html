@@ -258,7 +258,7 @@
 
     // --- Entrée : allocation chômage (ARE) ---
     start:{kind:"question",
-      title:"Le bénéficiaire perçoit-il l'allocation chômage (ARE) ?",
+      title:"Le bénéficiaire perçoit-il uniquement l'allocation chômage (ARE) ?",
       options:[
         {label:"Oui",chip:"ARE : oui",next:"motif"},
         {label:"Non",chip:"ARE : non",next:"ressources"}
@@ -269,7 +269,7 @@
     // Chaque option ayant un sous-parcours (pension, rente) le déclenchera
     // à la suite, via le système de "queue" du moteur.
     ressources:{kind:"multi",
-      title:"Quelles ressources le bénéficiaire perçoit-il ?",
+      title:"Quelles autres ressources le bénéficiaire perçoit-il ?",
       info:"Plusieurs choix possibles. Sélectionnez toutes les ressources concernées, puis validez.",
       options:[
         {label:"ASS — Allocation Solidarité Spécifique", chip:"ASS"},
