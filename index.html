@@ -34,7 +34,7 @@
     padding:24px 16px 48px;
   }
   .wrap{max-width:var(--maxw);margin:0 auto;}
- 
+
   header.app{
     display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;
   }
@@ -44,20 +44,20 @@
   }
   header.app h1{font-size:19px;font-weight:600;margin:0;line-height:1.3;}
   header.app p{margin:2px 0 0;font-size:13px;color:var(--muted);}
- 
+
   .trail{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;min-height:4px;}
   .trail .chip{
     background:var(--accent-tint);color:var(--accent-dark);
     font-size:12.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--accent-tint-line);
   }
- 
+
   .card{
     background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
     padding:24px;
   }
   .step-info{font-size:14.5px;color:var(--muted);margin:0 0 16px;}
   .question{font-size:17px;font-weight:600;margin:0 0 16px;line-height:1.4;outline:none;}
- 
+
   .options{display:flex;flex-direction:column;gap:10px;}
   .opt{
     display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -69,7 +69,14 @@
   .opt:hover{border-color:var(--accent);background:var(--accent-tint);}
   .opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
   .opt .arr{flex:0 0 auto;color:var(--accent);}
- 
+
+  /* Variante multi-sélection (cases à cocher) */
+  .opt-check{cursor:pointer;}
+  .opt-check input[type=checkbox]{
+    flex:0 0 auto;width:18px;height:18px;margin:0;cursor:pointer;accent-color:var(--accent);
+  }
+  .opt-check:has(input:checked){border-color:var(--accent);background:var(--accent-tint);}
+
   .ipp-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
   input[type=number]{
     width:130px;font:inherit;font-size:16px;padding:9px 12px;
@@ -78,7 +85,7 @@
   input[type=number]:focus-visible{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
   .unit{font-size:16px;color:var(--muted);}
   .err{color:var(--danger);font-size:13.5px;margin:10px 0 0;min-height:18px;}
- 
+
   .btn{
     font:inherit;font-size:15px;cursor:pointer;border-radius:var(--radius-sm);
     padding:10px 16px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);
@@ -88,10 +95,10 @@
   .btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
   .btn.primary:hover{background:var(--accent-dark);}
- 
+
   .nav{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:10px;}
   .nav .right{margin-left:auto;display:flex;gap:8px;}
- 
+
   /* result */
   .result-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;}
   .result-head .ico{
@@ -100,7 +107,7 @@
   .result-head.info .ico{background:var(--accent-tint);color:var(--accent-dark);}
   .result-head.neutral .ico{background:#ecebe4;color:var(--muted);}
   .result-head h2{font-size:17.5px;font-weight:600;margin:0;line-height:1.35;}
- 
+
   .panel{border-radius:var(--radius-sm);padding:18px;}
   .panel.info{background:var(--accent-tint);border:1px solid var(--accent-tint-line);}
   .panel.neutral{background:#f1f0ea;border:1px solid var(--line);}
@@ -118,7 +125,7 @@
   .addr .ln{font-size:14.5px;line-height:1.5;}
   .lk{display:flex;align-items:center;gap:7px;margin:0 0 12px;font-size:14.5px;}
   .lk svg{flex:0 0 auto;color:var(--accent-dark);}
- 
+
   .dl{
     display:flex;align-items:center;gap:12px;
     background:var(--surface);border:1px solid var(--accent);border-radius:var(--radius-sm);
@@ -132,18 +139,39 @@
   .dl .dt strong{display:block;font-size:14.5px;line-height:1.35;}
   .dl .dt span{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;}
   .dl .da{flex:0 0 auto;color:var(--accent-dark);}
- 
+
+  /* Multi-select : option avec case à cocher (classe .opt-check) */
+  .opt-check{
+    justify-content:flex-start;gap:12px;cursor:pointer;user-select:none;
+  }
+  .opt-check input[type=checkbox]{
+    margin:0;flex:0 0 auto;width:18px;height:18px;cursor:pointer;
+    accent-color:var(--accent);
+  }
+  .opt-check span{flex:1;line-height:1.4;}
+  .opt-check:has(input:checked){
+    background:var(--accent-tint);border-color:var(--accent);
+  }
+
+  /* Encadré « Autres ressources notées » sur l'écran de résultat */
+  .recap{
+    margin-top:14px;padding:12px 14px;
+    background:var(--surface);border:1px dashed var(--line-strong);
+    border-radius:var(--radius-sm);font-size:13.5px;color:var(--muted);
+  }
+  .recap strong{color:var(--ink);}
+
   footer.app{margin-top:22px;font-size:12.5px;color:var(--muted);line-height:1.55;}
   footer.app .ver{margin-top:6px;opacity:.8;}
- 
+
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
- 
+
   @media (max-width:520px){
     body{padding:16px 12px 40px;}
     .card{padding:18px;}
     .opt{font-size:14.5px;}
   }
- 
+
   /* impression : ne garder que le résultat */
   @media print{
     body{background:#fff;padding:0;}
@@ -158,7 +186,7 @@
 </head>
 <body>
 <div class="wrap">
- 
+
   <header class="app">
     <div class="mark" aria-hidden="true">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -168,13 +196,13 @@
       <p>Bénéficiaires de l'allocation chômage (ARE) — orientation du parcours</p>
     </div>
   </header>
- 
+
   <div class="trail" id="trail" aria-hidden="true"></div>
- 
+
   <main class="card" id="dialog" role="group" aria-live="polite" aria-label="Étape en cours">
     <!-- contenu injecté par le script -->
   </main>
- 
+
   <div class="nav">
     <button class="btn" id="back" type="button" style="display:none;">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
@@ -187,32 +215,32 @@
       </button>
     </div>
   </div>
- 
+
   <footer class="app">
     Cet outil fournit une aide à l'orientation. Il ne se substitue pas à l'analyse individuelle d'un conseiller ni aux décisions des organismes compétents (CPAM, Assurance retraite, etc.).
     <div class="ver">Version de test — à valider avant diffusion.</div>
   </footer>
- 
+
 </div>
- 
+
 <script>
 (function(){
   "use strict";
- 
+
   // === Constantes éditables ===
- 
+
   // Plafond ASI pour une personne seule.
   // À METTRE À JOUR chaque 1er avril (revalorisation annuelle).
   // Dernière mise à jour : 1er avril 2026 (source : ameli.fr)
   var ASI_AMOUNT = "922,16 €";
   var ASI_YEAR   = "2026";
- 
+
   // Liens externes
   var L_RETRAITE = "https://www.lassuranceretraite.fr/portail-info/home/actif/je-souhaite-partir-plus-tot/retraite-incapacite-permanente.html";
   var L_CPF      = "https://www.moncompteformation.gouv.fr/espace-public/abondement-accident-du-travail-ou-maladie-professionnelle-atmp";
   var L_ASI      = "https://www.ameli.fr/assure/droits-demarches/invalidite-handicap/invalidite/allocation-supplementaire-invalidite-asi";
   var L_CERFA    = "https://www.ameli.fr/sites/default/files/formualires/173/s4150.pdf";
- 
+
   // === Icônes (ne pas modifier) ===
   var ARR = '<svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
   var EXT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
@@ -221,24 +249,43 @@
   var ICO_DOC   = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>';
   var ICO_RET   = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>';
   var ICO_CHECK = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>';
- 
+
   // === Arbre de décision ===
   // Chaque "node" est une étape (question, saisie de taux, ou résultat).
   // Pour modifier une question / un libellé / un lien : cherche l'identifiant
   // du node ci-dessous (par exemple result_cerfa, prevoyance, etc.).
   var nodes = {
- 
+
     // --- Entrée : allocation chômage (ARE) ---
     start:{kind:"question",
       title:"Le bénéficiaire perçoit-il l'allocation chômage (ARE) ?",
       options:[
         {label:"Oui",chip:"ARE : oui",next:"motif"},
-        {label:"Non",chip:"ARE : non",next:"end_no_chomage"}
+        {label:"Non",chip:"ARE : non",next:"ressources"}
       ]},
-    end_no_chomage:{kind:"end",tone:"neutral",icon:ICO_INFO,
-      title:"Situation hors périmètre de l'outil",
-      blocks:[{p:"Ce parcours est prévu pour les bénéficiaires percevant l'allocation chômage (ARE). La situation décrite ne déclenche aucune des démarches couvertes ici."}]},
- 
+
+    // --- Branche « pas d'ARE » : ressources perçues ---
+    // Multi-sélection : plusieurs cases peuvent être cochées simultanément.
+    // Chaque option ayant un sous-parcours (pension, rente) le déclenchera
+    // à la suite, via le système de "queue" du moteur.
+    ressources:{kind:"multi",
+      title:"Quelles ressources le bénéficiaire perçoit-il ?",
+      info:"Plusieurs choix possibles. Sélectionnez toutes les ressources concernées, puis validez.",
+      options:[
+        {label:"ASS — Allocation Solidarité Spécifique", chip:"ASS"},
+        {label:"Pension d'invalidité", chip:"Pension d'invalidité", queue:{node:"categorie", label:"Pension d'invalidité"}},
+        {label:"Rente d'incapacité", chip:"Rente d'incapacité", queue:{node:"ipp", label:"Rente d'incapacité"}},
+        {label:"Retraite", chip:"Retraite"},
+        {label:"RSA — Revenu Solidarité Active", chip:"RSA"},
+        {label:"AAH — Allocation Adulte Handicapé", chip:"AAH"}
+      ],
+      // Node affiché si aucune ressource cochée n'a de sous-parcours associé.
+      fallback:"end_ressources_noted"},
+
+    end_ressources_noted:{kind:"end",tone:"neutral",icon:ICO_INFO,
+      title:"Ressources prises en compte",
+      blocks:[{p:"Les ressources sélectionnées ont été notées. Aucun parcours d'analyse spécifique n'est déclenché pour ces ressources dans la version actuelle de l'outil."}]},
+
     // --- Motif de fin de contrat ---
     motif:{kind:"question",
       title:"Quel est le motif de la fin de contrat ?",
@@ -247,7 +294,7 @@
         {label:"Licenciement pour inaptitude professionnelle (suite à un accident du travail / maladie professionnelle)",chip:"Inaptitude professionnelle",next:"ipp"},
         {label:"Autre motif (rupture conventionnelle, fin de CDD, licenciement…)",chip:"Autre motif",next:"fin_contrat"}
       ]},
- 
+
     // --- Sous-branche : autre motif → arrêt préalable ? ---
     fin_contrat:{kind:"question",
       title:"La fin de contrat a-t-elle été précédée d'un arrêt ?",
@@ -259,7 +306,7 @@
     end_no_arret:{kind:"end",tone:"neutral",icon:ICO_INFO,
       title:"Situation hors périmètre de l'outil",
       blocks:[{p:"En l'absence d'arrêt maladie ou d'arrêt AT/MP de plus de 3 mois précédant la fin de contrat, l'outil ne déclenche pas de démarche spécifique liée à l'invalidité ou à l'inaptitude."}]},
- 
+
     // --- Pension d'invalidité déjà perçue ? ---
     check_invalidite:{kind:"question",
       title:"Le bénéficiaire perçoit-il une pension d'invalidité ?",
@@ -267,7 +314,7 @@
         {label:"Non",chip:"Pension d'invalidité : non",next:"handicap"},
         {label:"Oui",chip:"Pension d'invalidité : oui",next:"categorie"}
       ]},
- 
+
     // --- Pension déjà perçue : catégorie ---
     categorie:{kind:"question",
       title:"Quelle est la catégorie de la pension d'invalidité ?",
@@ -277,7 +324,7 @@
         {label:"Catégorie 2",chip:"Pension catégorie 2",next:"prevoyance"},
         {label:"Catégorie 3",chip:"Pension catégorie 3",next:"prevoyance"}
       ]},
- 
+
     // --- Pension déjà perçue : complément Prévoyance ? ---
     prevoyance:{kind:"question",
       title:"Le bénéficiaire perçoit-il un complément Prévoyance sur sa pension d'invalidité ?",
@@ -285,7 +332,7 @@
         {label:"Oui",chip:"Complément Prévoyance : oui",next:"asi_with_prev"},
         {label:"Non",chip:"Complément Prévoyance : non",next:"asi_without_prev"}
       ]},
- 
+
     // --- ASI : deux variantes selon Prévoyance ---
     asi_with_prev:{kind:"question",
       title:"Le bénéficiaire perçoit-il l'Allocation Supplémentaire d'Invalidité (ASI) ?",
@@ -299,7 +346,7 @@
         {label:"Oui",chip:"ASI : oui",next:"result_check_prevoyance_only"},
         {label:"Non",chip:"ASI : non",next:"result_check_both"}
       ]},
- 
+
     // --- Pas de pension : question sur l'impact du handicap ---
     handicap:{kind:"question",
       title:"Impact du handicap sur le parcours professionnel",
@@ -309,7 +356,7 @@
         {label:"Oui, la situation compromet cette capacité",chip:"Capacité à temps plein compromise",next:"result_cerfa"},
         {label:"Non, la capacité est préservée",chip:"Capacité à temps plein préservée",next:"result_revenus_adaptes"}
       ]},
- 
+
     // --- Résultats : démarches CPAM (CERFA) ---
     result_cerfa:{kind:"end",tone:"info",icon:ICO_DOC,
       title:"Démarche à engager : demande de pension d'invalidité auprès de la CPAM",
@@ -325,12 +372,12 @@
           "Si possible, un courrier du médecin traitant (sur papier libre) précisant la ou les pathologies"
         ]}
       ]},
- 
+
     // --- Résultats : revenus déjà adaptés ---
     result_revenus_adaptes:{kind:"end",tone:"info",icon:ICO_CHECK,
       title:"Revenus de remplacement adaptés",
       blocks:[{p:"Il semble que les revenus de remplacement soient adaptés à la situation du bénéficiaire."}]},
- 
+
     // --- Résultats : pension + ni Prévoyance ni ASI ---
     result_check_both:{kind:"end",tone:"info",icon:ICO_DOC,
       title:"Démarches à envisager : complément Prévoyance et ASI",
@@ -339,7 +386,7 @@
         {p:"Par ailleurs, le bénéficiaire peut, sous conditions de ressources, solliciter l'<strong>Allocation Supplémentaire d'Invalidité (ASI)</strong> :"},
         {link:L_ASI,linkLabel:"Demander l'ASI sur ameli.fr"}
       ]},
- 
+
     // --- Résultats : pension + Prévoyance, mais pas d'ASI ---
     result_check_asi_with_prev:{kind:"end",tone:"info",icon:ICO_CHECK,
       title:"Revenus à comparer au plafond de l'ASI",
@@ -348,19 +395,19 @@
         {p:"<strong>S'ils restent inférieurs au plafond de l'ASI</strong> ("+ASI_AMOUNT+" par mois en "+ASI_YEAR+" pour une personne seule), le bénéficiaire peut solliciter l'<strong>Allocation Supplémentaire d'Invalidité (ASI)</strong> :"},
         {link:L_ASI,linkLabel:"Demander l'ASI sur ameli.fr"}
       ]},
- 
+
     // --- Résultats : pension + ASI, mais pas de Prévoyance ---
     result_check_prevoyance_only:{kind:"end",tone:"info",icon:ICO_DOC,
       title:"Démarche à envisager : complément Prévoyance",
       blocks:[
         {p:"Il convient de <strong>vérifier si un complément Prévoyance est possible</strong>."}
       ]},
- 
+
     // --- Branche inaptitude pro / AT-MP : taux d'IPP ---
     ipp:{kind:"ipp",
       title:"Quel est le taux d'IPP alloué par la Sécurité sociale ?",
       info:"Saisissez le taux d'incapacité permanente partielle (IPP) attribué, en pourcentage."},
- 
+
     age:{kind:"question",
       title:"Quel est l'âge du bénéficiaire ?",
       options:[
@@ -373,7 +420,7 @@
     end_ipp_low:{kind:"end",tone:"neutral",icon:ICO_INFO,
       title:"Aucune information spécifique",
       blocks:[{p:"Pour un taux d'IPP inférieur à 10 %, l'outil ne déclenche pas d'information sur le départ anticipé au titre de l'inaptitude."}]},
- 
+
     result_ipp_1020:{kind:"end",tone:"info",icon:ICO_RET,
       title:"Informations à transmettre (IPP de 10 % à 20 %, 60 ans et plus)",
       blocks:[
@@ -391,35 +438,59 @@
         {link:L_CPF,linkLabel:"Abondement CPF (accident du travail / maladie professionnelle)"}
       ]}
   };
- 
+
   var dialog=document.getElementById("dialog");
   var trailEl=document.getElementById("trail");
   var backBtn=document.getElementById("back");
   var restartBtn=document.getElementById("restart");
- 
-  var history=["start"];
-  var chips=[];
- 
-  function renderTrail(){
-    trailEl.innerHTML=chips.map(function(c){return '<span class="chip">'+c+'</span>';}).join("");
+
+  // state.node    : node courant
+  // state.chips   : fil d'Ariane (résumé des choix)
+  // state.queue   : sous-parcours à enchaîner après le node courant
+  //                 (chaque entrée = { node:"...", label:"..." })
+  // state.passive : ressources cochées dans le multi-select sans sous-parcours
+  //                 (ASS, Retraite, RSA, AAH) — affichées en récap final.
+  var state = { node:"start", chips:[], queue:[], passive:[] };
+  var history = []; // pile d'états précédents (pour le bouton "Précédent")
+
+  function snapshot(){
+    return { node:state.node, chips:state.chips.slice(), queue:state.queue.slice(), passive:state.passive.slice() };
   }
- 
+
+  function renderTrail(){
+    trailEl.innerHTML=state.chips.map(function(c){return '<span class="chip">'+c+'</span>';}).join("");
+  }
+
   function focusQuestion(){
     var q=dialog.querySelector(".question, .result-head h2");
     if(q){q.setAttribute("tabindex","-1");q.focus();}
   }
- 
-  function goNext(next,chip){
-    if(chip)chips.push(chip);
-    history.push(next);
+
+  // Aller vers un node : empile l'état courant, ajoute des chips, applique
+  // éventuellement une nouvelle queue, puis re-rend.
+  function goNext(next, addChips, newQueue){
+    history.push(snapshot());
+    state.node = next;
+    if(addChips && addChips.length) state.chips = state.chips.concat(addChips);
+    if(newQueue) state.queue = newQueue.slice();
     render();
   }
- 
+
+  // Continuer vers le sous-parcours suivant dans la queue (bouton sur les
+  // écrans de résultat quand au moins un sous-parcours reste à faire).
+  function continueQueue(){
+    if(state.queue.length === 0) return;
+    history.push(snapshot());
+    var nextItem = state.queue.shift();
+    state.node = nextItem.node;
+    render();
+  }
+
   function render(){
-    var n=nodes[history[history.length-1]];
-    backBtn.style.display=history.length>1?"inline-flex":"none";
+    var n=nodes[state.node];
+    backBtn.style.display = history.length>0 ? "inline-flex" : "none";
     renderTrail();
- 
+
     if(n.kind==="question"){
       var h="";
       if(n.info)h+='<p class="step-info">'+n.info+'</p>';
@@ -433,8 +504,52 @@
       Array.prototype.forEach.call(dialog.querySelectorAll(".opt"),function(b){
         b.addEventListener("click",function(){
           var o=n.options[+b.getAttribute("data-i")];
-          goNext(o.next,o.chip);
+          goNext(o.next, o.chip ? [o.chip] : []);
         });
+      });
+    }
+    else if(n.kind==="multi"){
+      var hm="";
+      if(n.info)hm+='<p class="step-info">'+n.info+'</p>';
+      hm+='<p class="question">'+n.title+'</p>';
+      hm+='<div class="options">';
+      n.options.forEach(function(o,i){
+        hm+='<label class="opt opt-check" for="m_'+i+'">';
+        hm+='<input type="checkbox" id="m_'+i+'" data-i="'+i+'" />';
+        hm+='<span>'+o.label+'</span>';
+        hm+='</label>';
+      });
+      hm+='</div>';
+      hm+='<div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">';
+      hm+='<button class="btn primary" id="multiGo" type="button">Valider</button>';
+      hm+='<span class="err" id="multiErr" role="alert" style="margin:0;"></span>';
+      hm+='</div>';
+      dialog.innerHTML=hm;
+      var errM=document.getElementById("multiErr");
+      document.getElementById("multiGo").addEventListener("click",function(){
+        var picked=[];
+        Array.prototype.forEach.call(dialog.querySelectorAll('input[type=checkbox]'),function(cb){
+          if(cb.checked) picked.push(n.options[+cb.getAttribute("data-i")]);
+        });
+        if(picked.length===0){
+          errM.textContent="Veuillez sélectionner au moins une ressource.";
+          return;
+        }
+        var newChips   = picked.map(function(o){return o.chip;});
+        var newQueue   = picked.filter(function(o){return o.queue;}).map(function(o){return o.queue;});
+        var newPassive = picked.filter(function(o){return !o.queue;}).map(function(o){return o.chip;});
+        // Mémoriser les ressources passives pour la récap finale
+        history.push(snapshot());
+        state.passive = newPassive;
+        state.chips   = state.chips.concat(newChips);
+        if(newQueue.length===0){
+          state.node = n.fallback;
+        }else{
+          var first = newQueue.shift();
+          state.queue = newQueue;
+          state.node  = first.node;
+        }
+        render();
       });
     }
     else if(n.kind==="ipp"){
@@ -455,9 +570,9 @@
         if(isNaN(v)||v<0||v>100){err.textContent="Veuillez saisir un taux valide compris entre 0 et 100.";input.focus();return;}
         var taux=Math.round(v*100)/100;
         var chip="Taux d'IPP : "+taux+" %";
-        if(taux<10)goNext("end_ipp_low",chip);
-        else if(taux<20)goNext("age",chip);
-        else goNext("result_ipp_20",chip);
+        if(taux<10)goNext("end_ipp_low",[chip]);
+        else if(taux<20)goNext("age",[chip]);
+        else goNext("result_ipp_20",[chip]);
       }
       document.getElementById("ippGo").addEventListener("click",submit);
       input.addEventListener("keydown",function(e){if(e.key==="Enter")submit();});
@@ -489,21 +604,56 @@
         }
       });
       c+='</div>';
-      if(n.tone==="info"){
-        c+='<div style="margin-top:16px;"><button class="btn" type="button" id="printBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Imprimer cette fiche</button></div>';
+
+      // Bouton "Continuer" si la queue contient encore des sous-parcours
+      var actions='';
+      if(state.queue.length > 0){
+        var nextLabel = state.queue[0].label;
+        actions+='<button class="btn primary" type="button" id="continueBtn">Continuer vers : '+nextLabel+'  '+ARR+'</button>';
       }
-      dialog.innerHTML=c;
+      if(n.tone==="info"){
+        actions+='<button class="btn" type="button" id="printBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Imprimer cette fiche</button>';
+      }
+
+      // Récap final des ressources passives (ASS, Retraite, RSA, AAH)
+      // affiché quand on est sur le DERNIER résultat d'une chaîne issue du
+      // multi-select (queue vide) ET qu'au moins une ressource sans sous-
+      // parcours a été cochée.
+      var recap='';
+      if(state.queue.length === 0 && state.passive && state.passive.length > 0){
+        var recapLabel = (state.node === "end_ressources_noted")
+          ? "Ressources notées"
+          : "Autres ressources notées";
+        recap = '<div class="recap"><strong>'+recapLabel+' :</strong> '+state.passive.join(', ')+'</div>';
+      }
+
+      var tail = '';
+      if(actions){
+        tail += '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">'+actions+'</div>';
+      }
+      tail += recap;
+      dialog.innerHTML = c + tail;
+
+      var cb=document.getElementById("continueBtn");
+      if(cb)cb.addEventListener("click",continueQueue);
       var pb=document.getElementById("printBtn");
       if(pb)pb.addEventListener("click",function(){window.print();});
     }
     focusQuestion();
   }
- 
+
   backBtn.addEventListener("click",function(){
-    if(history.length>1){history.pop();if(chips.length)chips.pop();render();}
+    if(history.length>0){
+      state = history.pop();
+      render();
+    }
   });
-  restartBtn.addEventListener("click",function(){history=["start"];chips=[];render();});
- 
+  restartBtn.addEventListener("click",function(){
+    state = { node:"start", chips:[], queue:[], passive:[] };
+    history = [];
+    render();
+  });
+
   render();
 })();
 </script>
