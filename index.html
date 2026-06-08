@@ -161,6 +161,49 @@
   }
   .recap strong{color:var(--ink);}
 
+  /* Encadré d'information clé (FT, CAF, AAH, etc.) dans les résultats */
+  .keyinfo{
+    margin:0 0 14px;padding:11px 14px;
+    background:var(--surface);border-left:3px solid var(--accent);
+    border-radius:4px;font-size:14px;line-height:1.6;
+  }
+  .keyinfo strong{color:var(--accent-dark);}
+
+  /* Sections repliables « En savoir plus » (dans les résultats ET les questions) */
+  .panel details, .step-info details{margin:10px 0 0;}
+  .panel details > summary,
+  .step-info details > summary{
+    cursor:pointer;padding:9px 12px;
+    background:var(--surface);border:1px solid var(--line-strong);
+    border-radius:var(--radius-sm);font-size:14px;font-weight:500;
+    color:var(--accent-dark);list-style:none;user-select:none;
+  }
+  .panel details > summary::-webkit-details-marker,
+  .step-info details > summary::-webkit-details-marker{display:none;}
+  .panel details > summary::before,
+  .step-info details > summary::before{
+    content:"▸ ";margin-right:6px;font-size:11px;transition:transform .15s;
+    display:inline-block;
+  }
+  .panel details[open] > summary::before,
+  .step-info details[open] > summary::before{content:"▾ ";}
+  .panel details > summary:hover,
+  .step-info details > summary:hover{background:var(--accent-tint);border-color:var(--accent);}
+  .panel details > .det-body,
+  .step-info details > .det-body{
+    padding:12px 14px;margin:8px 0 0 6px;
+    border-left:2px solid var(--accent-tint-line);
+    font-size:14px;line-height:1.65;
+  }
+  .panel details > .det-body p,
+  .step-info details > .det-body p{font-size:14px;margin:0 0 10px;}
+  .panel details > .det-body p:last-child,
+  .step-info details > .det-body p:last-child{margin-bottom:0;}
+  .panel details > .det-body ul,
+  .step-info details > .det-body ul{margin:0 0 10px;padding-left:20px;}
+  .panel details > .det-body li,
+  .step-info details > .det-body li{font-size:14px;line-height:1.55;margin-bottom:4px;}
+
   footer.app{margin-top:22px;font-size:12.5px;color:var(--muted);line-height:1.55;}
   footer.app .ver{margin-top:6px;opacity:.8;}
 
@@ -241,6 +284,41 @@
   var L_ASI      = "https://www.ameli.fr/assure/droits-demarches/invalidite-handicap/invalidite/allocation-supplementaire-invalidite-asi";
   var L_CERFA    = "https://www.ameli.fr/sites/default/files/formualires/173/s4150.pdf";
 
+  // --- Nouveaux liens (parcours ARE + autres ressources) ---
+  var L_FT_INVALIDITE  = "https://www.francetravail.fr/candidat/mes-droits-aux-aides-et-allocati/a-chaque-situation-son-allocatio/quelle-est-ma-situation-personne/je-recois-une-pension-dinvalidit.html";
+  var L_AMELI_INVALID  = "https://www.ameli.fr/assure/remboursements/pensions-allocations-rentes/invalidite";
+  var L_AGIRC          = "https://espace-personnel.agirc-arrco.fr/public/dopli";
+  var L_MDPH_FORMU     = "https://www.monparcourshandicap.gouv.fr/aides/formulaire-de-demande-la-mdph-cerfa-ndeg-1569201";
+  var L_MDPH_CNSA      = "https://mdphenligne.cnsa.fr/";
+
+  // --- Montant AAH (référence pour les comparaisons de ressources) ---
+  // À mettre à jour si nécessaire (revalorisation annuelle au 1er avril).
+  var AAH_AMOUNT = "1 042 €";
+
+  // --- Blocs de texte réutilisables (sections « En savoir plus ») ---
+  // Modifier ici si tu veux changer le contenu partout d'un coup.
+  var D_PREVOYANCE =
+    '<p><strong>80 % des branches professionnelles</strong> prévoient une couverture complémentaire au titre de la prévoyance, pour couvrir les risques lourds (arrêts de plus de 3 mois, invalidité, incapacité…).</p>'+
+    '<p>Le bénéficiaire perçoit l\'ARE&nbsp;: il peut, sous certaines conditions, bénéficier (comme pour la mutuelle) d\'une <strong>portabilité de ses droits à la prévoyance complémentaire</strong>.</p>'+
+    '<p>Pour retrouver la caisse en vigueur, plusieurs pistes&nbsp;:</p>'+
+    '<ul>'+
+      '<li>Si arrêt de travail de plus de 3 mois précédant l\'invalidité/l\'incapacité, et complément versé sur les indemnités journalières, il s\'agit généralement de la même caisse.</li>'+
+      '<li>Notice remise par l\'employeur à la signature du contrat de travail (coordonnées caisse / courtier).</li>'+
+      '<li>Service RH de l\'entreprise ou cabinet comptable.</li>'+
+      '<li>Espace personnel Agirc-Arrco&nbsp;: <a href="'+L_AGIRC+'" target="_blank" rel="noopener noreferrer">retrouver la dernière caisse d\'affiliation</a>.</li>'+
+    '</ul>'+
+    '<p>Il est conseillé de <strong>solliciter la demande par écrit</strong>, afin d\'obtenir un courrier ou e-mail en cas de refus et d\'en connaître le motif.</p>'+
+    '<p>Les branches professionnelles n\'ont pas toutes la même réglementation : il ne peut y avoir de réponse uniforme quant au niveau de garantie applicable. L\'employeur peut aussi, à titre individuel ou via un accord d\'entreprise, augmenter le niveau de prise en charge.</p>'+
+    '<div class="keyinfo" style="margin:10px 0 0;">Le complément Prévoyance <strong>ne doit pas être déclaré à France Travail</strong> lors de l\'actualisation&nbsp;: c\'est la caisse de prévoyance qui déduit le montant des allocations chômage dans son calcul.</div>';
+
+  var D_AAH_DEMANDE =
+    '<p>Si l\'ensemble des ressources du bénéficiaire reste inférieur au montant de l\'AAH (<strong>'+AAH_AMOUNT+'</strong>), il peut en faire la demande&nbsp;:</p>'+
+    '<ul>'+
+      '<li><a href="'+L_MDPH_FORMU+'" target="_blank" rel="noopener noreferrer">Formulaire MDPH — CERFA n° 15692*01</a> (à joindre avec un certificat médical dédié, téléchargeable sur le même site).</li>'+
+      '<li>Ou demande en ligne&nbsp;: <a href="'+L_MDPH_CNSA+'" target="_blank" rel="noopener noreferrer">MDPH en ligne (CNSA)</a>.</li>'+
+    '</ul>'+
+    '<p>Depuis <strong>octobre 2023</strong>, le calcul des ressources pour prétendre à l\'AAH a fait l\'objet d\'une <strong>déconjugalisation</strong>&nbsp;: seules les ressources du bénéficiaire sont prises en compte au sein de son foyer.</p>';
+
   // === Icônes (ne pas modifier) ===
   var ARR = '<svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
   var EXT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
@@ -257,11 +335,31 @@
   var nodes = {
 
     // --- Entrée : allocation chômage (ARE) ---
+    // --- Entrée : perception de l'ARE ---
     start:{kind:"question",
+      title:"Le bénéficiaire perçoit-il l'ARE ?",
+      options:[
+        {label:"Oui",chip:"ARE : oui",next:"q_uniquement_are"},
+        {label:"Non",chip:"ARE : non",next:"ressources"}
+      ]},
+
+    // --- Si ARE : uniquement l'ARE ou avec d'autres ressources ? ---
+    q_uniquement_are:{kind:"question",
       title:"Le bénéficiaire perçoit-il uniquement l'allocation chômage (ARE) ?",
       options:[
-        {label:"Oui",chip:"ARE : oui",next:"motif"},
-        {label:"Non",chip:"ARE : non",next:"ressources"}
+        {label:"Oui",chip:"Uniquement ARE",next:"motif"},
+        {label:"Non",chip:"ARE + autres ressources",next:"q_other_with_are"}
+      ]},
+
+    // --- Si ARE + autres ressources : multi-sélection des autres ressources ---
+    q_other_with_are:{kind:"multi",
+      multiKey:"other_with_are",
+      title:"Quelles autres ressources le bénéficiaire perçoit-il ?",
+      info:"Plusieurs choix possibles. Sélectionnez toutes les ressources concernées, puis validez.",
+      options:[
+        {id:"aah",     label:"AAH — Allocation Adulte Handicapé",                                       chip:"AAH"},
+        {id:"pension", label:"Pension d'invalidité",                                                    chip:"Pension d'invalidité"},
+        {id:"rente",   label:"Rente d'incapacité (suite à un accident de travail / maladie pro)",       chip:"Rente d'incapacité"}
       ]},
 
     // --- Branche « pas d'ARE » : ressources perçues ---
@@ -269,7 +367,8 @@
     // Chaque option ayant un sous-parcours (pension, rente) le déclenchera
     // à la suite, via le système de "queue" du moteur.
     ressources:{kind:"multi",
-      title:"Quelles autres ressources le bénéficiaire perçoit-il ?",
+      multiKey:"main_resources",
+      title:"Perçoit-il une ou plusieurs de ces ressources ?",
       info:"Plusieurs choix possibles. Sélectionnez toutes les ressources concernées, puis validez.",
       options:[
         {label:"ASS — Allocation Solidarité Spécifique", chip:"ASS"},
@@ -436,6 +535,217 @@
         {link:L_RETRAITE,linkLabel:"En savoir plus sur la retraite pour incapacité permanente"},
         {p:"Le bénéficiaire peut également bénéficier d'un <strong>abondement sur son compte CPF</strong> s'il effectue une formation dans les 2 ans suivant l'attribution du taux, à réaliser avant sa mise en retraite."},
         {link:L_CPF,linkLabel:"Abondement CPF (accident du travail / maladie professionnelle)"}
+      ]},
+
+    // ============================================================
+    //   PARCOURS « ARE + AUTRES RESSOURCES » (AAH / Pension / Rente)
+    //   Ces nodes ne sont atteints que depuis q_other_with_are.
+    // ============================================================
+
+    // ---- AAH : taux ----
+    q_taux_aah:{kind:"question",
+      title:"Quel est le taux d'AAH alloué par la MDA ?",
+      info:"La MDA (Maison Départementale de l'Autonomie) fixe le taux d'incapacité ouvrant droit à l'AAH.",
+      options:[
+        {label:"Entre 50 % et 79 %",chip:"AAH : 50–79 %",next:"result_aah_50_79"},
+        {label:"80 % ou plus",      chip:"AAH : ≥ 80 %",next:"result_aah_80"}
+      ]},
+
+    // ---- AAH 50–79 % : démarches et information ----
+    result_aah_50_79:{kind:"end",tone:"info",icon:ICO_DOC,
+      title:"AAH 50–79 % — démarches et information",
+      blocks:[
+        {keyinfo:"<strong>France Travail</strong> ne tient pas compte de l'AAH dans le calcul des allocations chômage. Le montant perçu au titre de l'allocation chômage doit être déclaré à la <strong>CAF tous les 3 mois</strong>."},
+        {p:"En accordant l'AAH, la CDAPH (Commission des droits et de l'autonomie des personnes handicapées) reconnaît des <strong>restrictions substantielles et durables à l'emploi (RSDE)</strong>. Cependant, le taux alloué nécessite un renouvellement régulier de la demande et ne garantit pas une source de revenus pérenne."},
+        {p:"Pour sécuriser les revenus de remplacement, il peut être utile de <strong>solliciter une pension d'invalidité</strong> auprès de la Sécurité sociale. La pension d'invalidité prime sur l'AAH."},
+        {cerfa:L_CERFA,
+         cerfaTitle:"Formulaire CERFA — Demande de pension d'invalidité",
+         cerfaMeta:"S4150 — Cerfa n° 11174*05 (site officiel ameli.fr)"},
+        {p:"Transmettre au bénéficiaire le formulaire à compléter, puis à renvoyer en <strong>recommandé avec accusé de réception (RAR)</strong> à&nbsp;:"},
+        {address:["CPAM Toulon — Service invalidité","42 rue Émile Ollivier — La Rode","83000 Toulon"]},
+        {listTitle:"Pièces à joindre :",list:[
+          "Copie de la carte d'identité (recto / verso)",
+          "Copie complète de l'avis d'imposition",
+          "Si possible, un courrier du médecin traitant (sur papier libre) précisant la ou les pathologies"
+        ]},
+        {details:{summary:"En savoir plus : suite en cas d'acceptation de la pension d'invalidité", body:
+          '<p>La pension d\'invalidité <strong>prime sur l\'AAH</strong>. La CAF déduira intégralement le montant de la pension de l\'AAH, et pratiquera un abattement sur les autres ressources du bénéficiaire (revenus d\'activité, allocations chômage…).</p>'+
+          '<p>Le titulaire d\'une AAH ou d\'une pension d\'invalidité bénéficie d\'une <strong>retraite à taux plein au titre de l\'inaptitude à 62 ans</strong> en l\'absence d\'activité professionnelle (cf. Assurance retraite — départ anticipé pour handicap).</p>'+
+          '<p>En cas d\'accord, solliciter également un <strong>complément Prévoyance</strong> et/ou l\'<strong>ASI</strong> sous conditions de ressources&nbsp;: <a href="'+L_ASI+'" target="_blank" rel="noopener noreferrer">Demander l\'ASI sur ameli.fr</a>.</p>'
+        }},
+        {details:{summary:"En savoir plus : Prévoyance complémentaire", body: D_PREVOYANCE}}
+      ]},
+
+    // ---- AAH ≥ 80 % : démarches et information ----
+    result_aah_80:{kind:"end",tone:"info",icon:ICO_DOC,
+      title:"AAH ≥ 80 % — démarches et information",
+      blocks:[
+        {keyinfo:"<strong>France Travail</strong> ne tient pas compte de l'AAH dans le calcul des allocations chômage. Le montant perçu au titre de l'allocation chômage doit être déclaré à la <strong>CAF tous les 3 mois</strong>."},
+        {keyinfo:"<strong>Attention :</strong> la reprise d'activité peut compromettre certains droits :<br/>• <strong>Complément de ressources</strong> (~179 €/mois, attribué avant le 01/12/2019, maintenu 10 ans sous conditions) : AAH à taux plein ou en complément d'une pension, capacité de travail &lt; 5 % (CDAPH), pas d'activité ni de revenus pro depuis au moins 1 an, logement indépendant.<br/>• <strong>Majoration pour vie autonome (MVA)</strong> (~104 €/mois, qui remplace le complément de ressources) : taux ≥ 80 %, AAH à taux plein ou en complément d'une pension/ASI, pas d'activité pro, logement indépendant avec aide au logement."},
+        {p:"En accordant l'AAH, la CDAPH reconnaît des <strong>restrictions substantielles et durables à l'emploi (RSDE)</strong>. Le taux alloué permet généralement une ouverture de droits pérenne."},
+        {p:"Il peut cependant être utile de solliciter une <strong>pension d'invalidité</strong> si la personne a exercé une activité professionnelle significative — la Sécurité sociale se base sur les <strong>10 meilleures années d'activité</strong> pour calculer le montant."},
+        {cerfa:L_CERFA,
+         cerfaTitle:"Formulaire CERFA — Demande de pension d'invalidité",
+         cerfaMeta:"S4150 — Cerfa n° 11174*05 (site officiel ameli.fr)"},
+        {p:"Transmettre au bénéficiaire le formulaire à compléter, puis à renvoyer en <strong>recommandé avec accusé de réception (RAR)</strong> à&nbsp;:"},
+        {address:["CPAM Toulon — Service invalidité","42 rue Émile Ollivier — La Rode","83000 Toulon"]},
+        {listTitle:"Pièces à joindre :",list:[
+          "Copie de la carte d'identité (recto / verso)",
+          "Copie complète de l'avis d'imposition",
+          "Si possible, un courrier du médecin traitant (sur papier libre) précisant la ou les pathologies"
+        ]},
+        {details:{summary:"En savoir plus : calcul du montant de la pension d'invalidité", body:
+          '<p>Pour un salarié, la Sécurité sociale se base sur les <strong>10 meilleures années d\'activité</strong> (d\'après le relevé de carrière CARSAT) pour établir un <em>salaire annuel moyen</em>.</p>'+
+          '<ul>'+
+            '<li><strong>Catégorie 1</strong> : montant annuel = 30 % du salaire annuel moyen.</li>'+
+            '<li><strong>Catégorie 2</strong> : 50 % du salaire annuel moyen.</li>'+
+            '<li><strong>Catégorie 3</strong> : 50 % + majoration pour tierce personne (actes de la vie quotidienne).</li>'+
+          '</ul>'+
+          '<p>Il existe des montants planchers et plafonds mensuels.</p>'+
+          '<p><a href="'+L_AMELI_INVALID+'" target="_blank" rel="noopener noreferrer">Plus d\'informations sur ameli.fr</a></p>'
+        }},
+        {details:{summary:"En savoir plus : suite en cas d'acceptation de la pension d'invalidité", body:
+          '<p>La pension d\'invalidité <strong>prime sur l\'AAH</strong> : la CAF déduira intégralement le montant de la pension de l\'AAH, et pratiquera un abattement sur les autres ressources.</p>'+
+          '<p>Le titulaire d\'une AAH ou d\'une pension bénéficie d\'une <strong>retraite à taux plein au titre de l\'inaptitude à 62 ans</strong> en l\'absence d\'activité professionnelle.</p>'+
+          '<p>Pour l\'AAH ≥ 80 %, un droit à l\'<strong>AAH différentielle</strong> peut être étudié au-delà de 62 ans, si le montant de la pension de retraite est inférieur à celui de l\'AAH.</p>'+
+          '<p>En cas d\'accord, solliciter également un <strong>complément Prévoyance</strong> et/ou l\'<strong>ASI</strong> sous conditions de ressources : <a href="'+L_ASI+'" target="_blank" rel="noopener noreferrer">Demander l\'ASI sur ameli.fr</a>.</p>'
+        }},
+        {details:{summary:"En savoir plus : Prévoyance complémentaire", body: D_PREVOYANCE}}
+      ]},
+
+    // ---- Pension d'invalidité (nouveau parcours) : catégorie ----
+    categorie_new:{kind:"question",
+      title:"Quelle est la catégorie de la pension d'invalidité ?",
+      info:"La catégorie est indiquée sur la notification de pension d'invalidité délivrée par la CPAM.",
+      options:[
+        {label:"Catégorie 1",chip:"Pension catégorie 1",next:"info_cat1"},
+        {label:"Catégorie 2",chip:"Pension catégorie 2",next:"info_cat2"},
+        {label:"Catégorie 3",chip:"Pension catégorie 3",next:"info_cat3"}
+      ]},
+
+    // ---- Catégorie 1 : info + question Prévoyance ----
+    info_cat1:{kind:"question",
+      title:"Pension catégorie 1",
+      info:"<p><strong>France Travail</strong> ne tient pas compte du montant versé par la Sécurité sociale au titre de la pension catégorie 1 dans le calcul des allocations chômage. Les ressources d'activité (ou allocations chômage) doivent être déclarées à la Sécurité sociale, en général tous les 3 mois.</p><p class=\"keyinfo\" style=\"margin:10px 0;\"><strong>Attention :</strong> en cas de changement de catégorie (de 1 à 2) en cours d'indemnisation par France Travail, un <strong>trop-perçu</strong> est à prévoir — la pension sera déduite des allocations chômage à compter de la date d'attribution de la catégorie 2, alors qu'elles se cumulaient en catégorie 1.</p><p><a href=\""+L_FT_INVALIDITE+"\" target=\"_blank\" rel=\"noopener noreferrer\">Plus d'informations sur francetravail.fr</a></p>",
+      question:"Le bénéficiaire perçoit-il un complément Prévoyance sur sa pension d'invalidité ?",
+      options:[
+        {label:"Oui",chip:"Complément Prévoyance : oui",next:"asi_v2_with_prev"},
+        {label:"Non",chip:"Complément Prévoyance : non",next:"asi_v2_without_prev"}
+      ]},
+
+    // ---- Catégorie 2 : info + question Prévoyance ----
+    info_cat2:{kind:"question",
+      title:"Pension catégorie 2",
+      info:"<p><strong>La pension d'invalidité 2ème catégorie doit être transmise à France Travail.</strong></p><p>Son montant sera <strong>intégralement déduit</strong> des allocations chômage si la notification de pension mentionne une date d'admission <strong>postérieure</strong> à la date de fin de contrat ayant ouvert les droits.</p><p><em>Exemple : notification d'invalidité au 15/01/2026 + fin de contrat ouvrant les droits au 10/01/2026 → pension intégralement déduite.</em></p><p>En cas de rétroactivité, un trop-perçu côté France Travail peut survenir, compensé par un paiement côté Sécurité sociale.</p><p>En revanche, si la pension cat. 2 a été attribuée durant la période de travail ouvrant droit à l'allocation chômage <strong>et</strong> qu'il y a eu reprise effective de travail mentionnée sur un bulletin de salaire (ex. reprise pour visite médicale avant procédure d'inaptitude), le montant ne sera pas déduit par France Travail.</p><p><a href=\""+L_FT_INVALIDITE+"\" target=\"_blank\" rel=\"noopener noreferrer\">Plus d'informations sur francetravail.fr</a></p>",
+      question:"Le bénéficiaire perçoit-il un complément Prévoyance sur sa pension d'invalidité ?",
+      options:[
+        {label:"Oui",chip:"Complément Prévoyance : oui",next:"asi_v2_with_prev"},
+        {label:"Non",chip:"Complément Prévoyance : non",next:"asi_v2_without_prev"}
+      ]},
+
+    // ---- Catégorie 3 : info + question Prévoyance ----
+    info_cat3:{kind:"question",
+      title:"Pension catégorie 3",
+      info:"<p><strong>La pension d'invalidité 3ème catégorie doit être transmise à France Travail.</strong> Son montant sera intégralement déduit des allocations chômage si la date d'admission est postérieure à la fin de contrat ayant ouvert les droits (mêmes règles que la catégorie 2).</p><p>Les ressources d'activité (ou allocations chômage) doivent être déclarées à la Sécurité sociale, en général tous les 3 mois.</p><p class=\"keyinfo\" style=\"margin:10px 0;\">La <strong>majoration tierce personne</strong> inhérente à la catégorie 3 n'est pas prise en compte dans le calcul.</p><p><a href=\""+L_FT_INVALIDITE+"\" target=\"_blank\" rel=\"noopener noreferrer\">Plus d'informations sur francetravail.fr</a></p>",
+      question:"Le bénéficiaire perçoit-il un complément Prévoyance sur sa pension d'invalidité ?",
+      options:[
+        {label:"Oui",chip:"Complément Prévoyance : oui",next:"asi_v2_with_prev"},
+        {label:"Non",chip:"Complément Prévoyance : non",next:"asi_v2_without_prev"}
+      ]},
+
+    // ---- ASI (nouveau parcours) : 2 variantes selon Prévoyance ----
+    asi_v2_with_prev:{kind:"question",
+      title:"Le bénéficiaire perçoit-il l'Allocation Supplémentaire d'Invalidité (ASI) ?",
+      options:[
+        {label:"Oui",chip:"ASI : oui",next:"result_v2_revenus_adaptes"},
+        {label:"Non",chip:"ASI : non",next:"result_v2_asi_with_prev"}
+      ]},
+    asi_v2_without_prev:{kind:"question",
+      title:"Le bénéficiaire perçoit-il l'Allocation Supplémentaire d'Invalidité (ASI) ?",
+      options:[
+        {label:"Oui",chip:"ASI : oui",next:"result_v2_prevoyance_only"},
+        {label:"Non",chip:"ASI : non",next:"result_v2_check_both"}
+      ]},
+
+    // ---- 4 résultats (Pension nouveau parcours) ----
+    result_v2_revenus_adaptes:{kind:"end",tone:"info",icon:ICO_CHECK,
+      title:"Revenus à comparer au plafond de l'ASI",
+      blocks:[
+        {p:"Il semble que les revenus de remplacement soient adaptés à la situation du bénéficiaire."},
+        {p:"<strong>S'ils restent inférieurs au plafond de l'ASI</strong> ("+ASI_AMOUNT+" par mois en "+ASI_YEAR+" pour une personne seule), il est possible de solliciter l'<strong>ASI</strong>&nbsp;:"},
+        {link:L_ASI,linkLabel:"Demander l'ASI sur ameli.fr"},
+        {details:{summary:"En savoir plus : demande d'AAH si ressources < "+AAH_AMOUNT, body: D_AAH_DEMANDE}},
+        {details:{summary:"En savoir plus : Prévoyance complémentaire", body: D_PREVOYANCE}}
+      ]},
+    result_v2_asi_with_prev:{kind:"end",tone:"info",icon:ICO_CHECK,
+      title:"Démarche à envisager : Prévoyance",
+      blocks:[
+        {p:"Il convient de <strong>vérifier si un complément Prévoyance est possible</strong>."},
+        {p:"Par ailleurs, sous conditions de ressources, le bénéficiaire peut solliciter l'<strong>ASI</strong> :"},
+        {link:L_ASI,linkLabel:"Demander l'ASI sur ameli.fr"},
+        {details:{summary:"En savoir plus : demande d'AAH si ressources < "+AAH_AMOUNT, body: D_AAH_DEMANDE}},
+        {details:{summary:"En savoir plus : Prévoyance complémentaire", body: D_PREVOYANCE}}
+      ]},
+    result_v2_prevoyance_only:{kind:"end",tone:"info",icon:ICO_DOC,
+      title:"Démarche à envisager : complément Prévoyance",
+      blocks:[
+        {p:"Il convient de <strong>vérifier si un complément Prévoyance est possible</strong>."},
+        {details:{summary:"En savoir plus : demande d'AAH si ressources < "+AAH_AMOUNT, body: D_AAH_DEMANDE}},
+        {details:{summary:"En savoir plus : Prévoyance complémentaire", body: D_PREVOYANCE}}
+      ]},
+    result_v2_check_both:{kind:"end",tone:"info",icon:ICO_DOC,
+      title:"Démarches à envisager : complément Prévoyance et ASI",
+      blocks:[
+        {p:"Il convient de <strong>vérifier si un complément Prévoyance est possible</strong>."},
+        {p:"Par ailleurs, sous conditions de ressources, le bénéficiaire peut solliciter l'<strong>ASI</strong>&nbsp;:"},
+        {link:L_ASI,linkLabel:"Demander l'ASI sur ameli.fr"},
+        {details:{summary:"En savoir plus : demande d'AAH si ressources < "+AAH_AMOUNT, body: D_AAH_DEMANDE}},
+        {details:{summary:"En savoir plus : Prévoyance complémentaire", body: D_PREVOYANCE}}
+      ]},
+
+    // ---- Rente d'incapacité (seule, sans AAH) : info + question Prévoyance ----
+    info_rente_alone:{kind:"question",
+      title:"Rente d'incapacité",
+      info:"<p><strong>France Travail</strong> ne tient pas compte de la rente d'incapacité dans le calcul des allocations chômage.</p><p>Elle est versée <strong>à vie</strong>, n'est <strong>pas imposable</strong>, et est versée mensuellement ou trimestriellement selon le taux.</p>",
+      question:"Le bénéficiaire perçoit-il un complément Prévoyance sur sa rente d'incapacité ?",
+      options:[
+        {label:"Oui",chip:"Complément Prévoyance : oui",next:"result_rente_alone_prev_oui"},
+        {label:"Non",chip:"Complément Prévoyance : non",next:"result_rente_alone_prev_non"}
+      ]},
+    result_rente_alone_prev_oui:{kind:"end",tone:"info",icon:ICO_CHECK,
+      title:"Rente d'incapacité avec complément Prévoyance",
+      blocks:[
+        {p:"Le bénéficiaire perçoit déjà un complément Prévoyance sur sa rente d'incapacité."},
+        {details:{summary:"En savoir plus : demande d'AAH si ressources < "+AAH_AMOUNT, body: D_AAH_DEMANDE+'<div class="keyinfo" style="margin-top:10px;">La CAF déduira le montant de la rente d\'incapacité du montant de l\'AAH.</div>'}}
+      ]},
+    result_rente_alone_prev_non:{kind:"end",tone:"info",icon:ICO_DOC,
+      title:"Rente d'incapacité — Prévoyance à vérifier",
+      blocks:[
+        {p:"Il convient de <strong>vérifier si un complément Prévoyance est possible</strong>."},
+        {details:{summary:"En savoir plus : Prévoyance complémentaire", body: D_PREVOYANCE}}
+      ]},
+
+    // ---- Rente d'incapacité + AAH : info + question Prévoyance ----
+    info_rente_with_aah:{kind:"question",
+      title:"Rente d'incapacité (avec AAH)",
+      info:"<p><strong>France Travail</strong> ne tient pas compte de la rente d'incapacité dans le calcul des allocations chômage.</p><p>Elle est versée <strong>à vie</strong>, n'est <strong>pas imposable</strong>, et est versée mensuellement ou trimestriellement selon le taux.</p><p class=\"keyinfo\" style=\"margin:10px 0;\">La <strong>CAF déduit le montant de la rente d'incapacité de l'AAH</strong>, et applique un abattement sur les autres ressources d'activité.</p>",
+      question:"Le bénéficiaire perçoit-il un complément Prévoyance sur sa rente d'incapacité ?",
+      options:[
+        {label:"Oui",chip:"Complément Prévoyance : oui",next:"result_rente_with_aah_followup"},
+        {label:"Non",chip:"Complément Prévoyance : non",next:"result_rente_with_aah_followup"}
+      ]},
+    result_rente_with_aah_followup:{kind:"question",
+      title:"Rente d'incapacité + AAH — informations complémentaires",
+      info:"<p>En accordant l'AAH, la CDAPH reconnaît des <strong>restrictions substantielles et durables à l'emploi (RSDE)</strong>. Le taux alloué nécessite un renouvellement régulier de la demande et ne garantit pas une source de revenus pérenne — il convient de vérifier avec le bénéficiaire la <strong>durée d'attribution</strong> et le <strong>taux alloué</strong>.</p><p>Un <strong>diagnostic global de la situation</strong> peut être réalisé pour identifier les éventuelles conséquences indirectes de l'AT/MP sur la vie quotidienne et professionnelle. En effet, une <strong>pension d'invalidité</strong> peut être demandée pour des pathologies autres que celle indemnisée par la rente (ex. troubles psychiques, douleurs invalidantes…) et se cumuler avec la rente d'incapacité.</p><details><summary>En savoir plus : invalidité (cumul rente + pension)</summary><div class=\"det-body\"><p>La <strong>demande de pension d'invalidité prime sur l'AAH</strong>. La CAF déduira intégralement le montant de la pension <strong>et de la rente d'incapacité</strong> de l'AAH, et pratiquera un abattement sur les autres ressources (revenus d'activité, allocations chômage…).</p><p>En cas d'accord de pension, solliciter également un <strong>complément Prévoyance</strong> et/ou l'<strong>ASI</strong> sous conditions de ressources : <a href=\""+L_ASI+"\" target=\"_blank\" rel=\"noopener noreferrer\">Demander l'ASI sur ameli.fr</a>. L'ASI prime également sur l'AAH.</p></div></details><details><summary>En savoir plus : Prévoyance complémentaire</summary><div class=\"det-body\">"+D_PREVOYANCE+"</div></details>",
+      question:"Souhaitez-vous en savoir plus sur un éventuel départ anticipé à la retraite ?",
+      options:[
+        {label:"Oui, voir le départ anticipé",chip:"Voir : départ anticipé retraite",next:"ipp"},
+        {label:"Non, terminer ce parcours",  chip:"Pas d'info retraite",            next:"end_rente_done"}
+      ]},
+    end_rente_done:{kind:"end",tone:"info",icon:ICO_CHECK,
+      title:"Parcours rente d'incapacité — fin",
+      blocks:[
+        {p:"Vous avez parcouru les informations principales liées à la rente d'incapacité dans ce contexte."}
       ]}
   };
 
@@ -450,11 +760,20 @@
   //                 (chaque entrée = { node:"...", label:"..." })
   // state.passive : ressources cochées dans le multi-select sans sous-parcours
   //                 (ASS, Retraite, RSA, AAH) — affichées en récap final.
-  var state = { node:"start", chips:[], queue:[], passive:[] };
+  // state.checked : id des options cochées dans le DERNIER multi-select
+  //                 (utilisé pour le routage et l'affichage conditionnel,
+  //                 ex. message « rente + AAH » vs « rente seule »).
+  var state = { node:"start", chips:[], queue:[], passive:[], checked:{} };
   var history = []; // pile d'états précédents (pour le bouton "Précédent")
 
   function snapshot(){
-    return { node:state.node, chips:state.chips.slice(), queue:state.queue.slice(), passive:state.passive.slice() };
+    return {
+      node:    state.node,
+      chips:   state.chips.slice(),
+      queue:   state.queue.slice(),
+      passive: state.passive.slice(),
+      checked: Object.assign({}, state.checked)
+    };
   }
 
   function renderTrail(){
@@ -493,7 +812,7 @@
 
     if(n.kind==="question"){
       var h="";
-      if(n.info)h+='<p class="step-info">'+n.info+'</p>';
+      if(n.info)h+='<div class="step-info">'+n.info+'</div>';
       h+='<p class="question">'+(n.question||n.title)+'</p>';
       h+='<div class="options">';
       n.options.forEach(function(o,i){
@@ -510,7 +829,7 @@
     }
     else if(n.kind==="multi"){
       var hm="";
-      if(n.info)hm+='<p class="step-info">'+n.info+'</p>';
+      if(n.info)hm+='<div class="step-info">'+n.info+'</div>';
       hm+='<p class="question">'+n.title+'</p>';
       hm+='<div class="options">';
       n.options.forEach(function(o,i){
@@ -535,13 +854,35 @@
           errM.textContent="Veuillez sélectionner au moins une ressource.";
           return;
         }
-        var newChips   = picked.map(function(o){return o.chip;});
+        history.push(snapshot());
+        var newChips = picked.map(function(o){return o.chip;});
+        state.chips = state.chips.concat(newChips);
+
+        // Mémoriser les options cochées (pour les affichages conditionnels)
+        state.checked = {};
+        picked.forEach(function(o){ if(o.id) state.checked[o.id] = true; });
+
+        // --- Routage dynamique pour le nouveau multi-select à 3 options ---
+        if(n.multiKey === "other_with_are"){
+          var hasA = !!state.checked.aah;
+          var hasP = !!state.checked.pension;
+          var hasR = !!state.checked.rente;
+          state.passive = [];
+          var nq = [];
+          if(hasA) nq.push({node:"q_taux_aah",        label:"AAH"});
+          if(hasP) nq.push({node:"categorie_new",     label:"Pension d'invalidité"});
+          if(hasR) nq.push({node: hasA ? "info_rente_with_aah" : "info_rente_alone", label:"Rente d'incapacité"});
+          var firstA = nq.shift();
+          state.queue = nq;
+          state.node  = firstA.node;
+          render();
+          return;
+        }
+
+        // --- Cas standard : routage par option (queue:{...} sur chaque option) ---
         var newQueue   = picked.filter(function(o){return o.queue;}).map(function(o){return o.queue;});
         var newPassive = picked.filter(function(o){return !o.queue;}).map(function(o){return o.chip;});
-        // Mémoriser les ressources passives pour la récap finale
-        history.push(snapshot());
         state.passive = newPassive;
-        state.chips   = state.chips.concat(newChips);
         if(newQueue.length===0){
           state.node = n.fallback;
         }else{
@@ -582,6 +923,10 @@
       c+='<div class="panel '+n.tone+'">';
       n.blocks.forEach(function(b){
         if(b.p)c+='<p>'+b.p+'</p>';
+        if(b.keyinfo)c+='<div class="keyinfo">'+b.keyinfo+'</div>';
+        if(b.details){
+          c+='<details><summary>'+b.details.summary+'</summary><div class="det-body">'+b.details.body+'</div></details>';
+        }
         if(b.cerfa){
           c+='<a class="dl" href="'+b.cerfa+'" target="_blank" rel="noopener noreferrer">';
           c+='<span class="di" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5h5"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span>';
@@ -649,7 +994,7 @@
     }
   });
   restartBtn.addEventListener("click",function(){
-    state = { node:"start", chips:[], queue:[], passive:[] };
+    state = { node:"start", chips:[], queue:[], passive:[], checked:{} };
     history = [];
     render();
   });
